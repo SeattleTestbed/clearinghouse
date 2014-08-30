@@ -90,7 +90,7 @@ My Vessels - Seattle Clearinghouse
 {% endblock script %}
 
 {% block nav_myvessels %}
-<td class="active"><a href="{% url myvessels %}">My Vessels</a></td>
+<td class="active"><a href="{% url 'myvessels' %}">My Vessels</a></td>
 {% endblock nav_myvessels %}
 
 {% block content %}
@@ -102,11 +102,11 @@ My Vessels - Seattle Clearinghouse
 				<img src="{{ MEDIA_URL }}images/help-icon.png" title="Each user is gifted {{ free_vessel_credits }} vessels. In addition to these, each 
 donation on your behalf grants 10 vessels. 
 {{free_vessel_credits}} + ({{my_donations  }} * 10) = {{ total_vessel_credits }}"></img> </span>
-				<span id="total_donations"> Total<a href="{% url getdonations %}"> donations </a>: {{my_donations}}</span> 
+				<span id="total_donations"> Total<a href="{% url 'getdonations' %}"> donations </a>: {{my_donations}}</span> 
 				</span>
 			<br/>
 				{% ifnotequal get_form None %}
-				<form method="POST" action="{% url get_resources %}">
+				<form method="POST" action="{% url 'get_resources' %}">
 				  <span id="caption">Get more resources</span>
 					<font color="red">	{{ get_form.num.errors }}</font>
 					<font color="red">	{{ get_form.env.errors }}</font>
@@ -139,18 +139,18 @@ donation on your behalf grants 10 vessels.
 				<tr class="odd">
 					{% ifnotequal num_vessels 0 %}
 					  <th>
-					  <form method="POST" action="{% url del_all_resources %}">
+					  <form method="POST" action="{% url 'del_all_resources' %}">
 						<input type="submit" value="remove all"> </input>
 					  </form>
 					  </th>
 					{% endifnotequal %}
-					{% url help as help %}
+					{% url 'help' as help %}
 					<th>Vessel Location</th>
 					<th>Vessel Name <a class="help" href="{{ help }}#myvessels" title="For each vessel that you acquire, you will see an entry in the table with the vessel location (denoted by its IP address) and vessel name. This is the name that seash will display when you browse your vessels."><img src="{{ MEDIA_URL }}images/help-icon.png" ></img></a></th>
 					<th>Expires In</th>
 					{% ifnotequal num_vessels 0 %}
 					  <th>
-					  <form method="POST" action="{% url renew_all_resources %}">
+					  <form method="POST" action="{% url 'renew_all_resources' %}">
 						<input type="submit" value="renew all"> </input>
 					  </form>
 					  </th>
@@ -160,7 +160,7 @@ donation on your behalf grants 10 vessels.
 				{% for vessel in my_vessels %}
   				<tr class="{% cycle 'odd' 'even' %}">
   					<td>
-  					  <form method="POST" action="{% url del_resource %}">
+  					  <form method="POST" action="{% url 'del_resource' %}">
   				    	<input type="image" src="{{ MEDIA_URL }}images/delete.png" alt="Remove" />
   				    	<input type="hidden" name="handle" value="{{ vessel.handle }}" />
   					  </form>
@@ -174,7 +174,7 @@ donation on your behalf grants 10 vessels.
   					<td> {{ vessel.vessel_id }} </td>
   					<td> {{ vessel.expires_in }} </td>
   					<td>
-  					  <form method="POST" action="{% url renew_resource %}">
+  					  <form method="POST" action="{% url 'renew_resource' %}">
   				    	<input type="image" src="{{ MEDIA_URL }}images/reload.png" alt="Renew" />
   				    	<input type="hidden" name="handle" value="{{ vessel.handle }}" />
   					  </form>

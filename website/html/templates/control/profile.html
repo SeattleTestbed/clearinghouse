@@ -89,7 +89,7 @@ Profile - Seattle Clearinghouse
 {% endblock title %}
 
 {% block nav_profile %}
-<td class="active"><a href="{% url profile %}">Profile</a></td>
+<td class="active"><a href="{% url 'profile' %}">Profile</a></td>
 {% endblock nav_profile %}
 
 {% block content %}
@@ -134,7 +134,7 @@ Profile - Seattle Clearinghouse
 					<td class="value"> <button class="edit" type="button" title="Password">Edit</button>
 						<span class="value">********</span>
 						<span class="hide_this">
-							<form action="{% url profile %}" method="POST">
+							<form action="{% url 'profile' %}" method="POST">
 								<table id="edit_password">
 									<tr>
 										<td>Enter password: </td>
@@ -154,7 +154,7 @@ Profile - Seattle Clearinghouse
 					<td class="value">
 						<span class="value">{{ affiliation }}</span>
 						<span class="hide_this">
-							<form  action="{% url profile %}" method="POST">
+							<form  action="{% url 'profile' %}" method="POST">
 								{{ affiliation_form.affiliation }}
 								<input type="submit" value="Save"/>
 							</form>
@@ -167,7 +167,7 @@ Profile - Seattle Clearinghouse
 					<td class="value">
 						<span class="value" >{{ email }} </span>
 						<span class="hide_this">
-							<form action="{% url profile %}" method="POST">
+							<form action="{% url 'profile' %}" method="POST">
 								{{ email_form.email }}
 								<input type="submit" value="Save"/>
 							</form>
@@ -181,7 +181,7 @@ Profile - Seattle Clearinghouse
 					<td class="value api_cell"> 
 							<span class="api_cell" title="double click to show"><i>double click to show</i></span>
 							<span id="api_key" class="hide_this" title="double click to hide">{{ api_key }}</span>
-							<form action="{% url api_info %}" method="post">
+							<form action="{% url 'api_info' %}" method="post">
 							<input type="hidden" name="generate_api_key" value="yes"/>
 							<button id="generate_api" type="submit"title="In some cases you may want to generate a new API key (for example, if you accidentally left your old one in a file that you shared publicly). Generating a new API key will make your old API key no longer work.">Generate new API Key</button>
 							</form>
@@ -213,7 +213,7 @@ Profile - Seattle Clearinghouse
 									<img src="{{ MEDIA_URL }}images/yahoo-icon.png" title="Yahoo account linked" />
 								{% endif %}
      						 {% comment %}  <span class="disconnect">
-											<a href={% url socialauth_disconnect_individual account.provider account.id %}>
+											<a href={% url 'socialauth_disconnect_individual' account.provider account.id %}>
 												{{ account.provider|title }} (ID {{ account.id }})<br/></a></span> 
 								 {% endcomment %}
    					 {% endfor %}
@@ -221,7 +221,7 @@ Profile - Seattle Clearinghouse
 					
 				{% for name, accounts in social_auth.not_associated.items %}
 					{% for name in accounts %}
-				  	<a rel="nofollow" href="{% url socialauth_begin name %}">
+				  	<a rel="nofollow" href="{% url 'socialauth_begin' name %}">
 				    	{% if name == "facebook"%}
 				  		 <img src="{{ MEDIA_URL }}images/bw-Facebook-icon.png" title="A Facebook account is not yet associated, click to link it!"/>
 					    {% endif %}
@@ -245,7 +245,7 @@ Profile - Seattle Clearinghouse
 		<table class="profile">
 			<tr>
 				<td><h3>Your Keys</h3></td>
-				<td> <form id="change_key" action="{% url change_key %}" method="post"style="display:inline;">
+				<td> <form id="change_key" action="{% url 'change_key' %}" method="post"style="display:inline;">
 					<input type="hidden" name="generate" value="yes"/>
 					<button id="generate_keypair" type="submit" title="The Clearinghouse can generate a new key pair for you. After it is generated, you will need to download your public and private keys again." style=""> Generate new Key Pair</button>
 						</form>
@@ -262,11 +262,11 @@ Profile - Seattle Clearinghouse
 					<span class="value">********</span>
 					<span class="hide_this">
 						<button type="button" class="cancel" title="Cancel"> Cancel </button>
-						<form action="{% url change_key %}" method="post" enctype="multipart/form-data">
+						<form action="{% url 'change_key' %}" method="post" enctype="multipart/form-data">
 							<input type="file" name="pubkey"/> <button type="submit" title="Upload a public key">Upload</button>
 						</form>
 					</span>
-					<form method="POST" action="{% url pub_key %}" id="download_pubkey_form"> 
+					<form method="POST" action="{% url 'pub_key' %}" id="download_pubkey_form"> 
 						<button type="submit" class="download" title="Download your public key"> Download </button>
 					 </form>
 						<button id="show_keyform" type="button" title="Upload a public key"> Upload </button>
@@ -276,10 +276,10 @@ Profile - Seattle Clearinghouse
 				<tr class="even">
 					<td class="key">Private Key <img class="help" src="{{ MEDIA_URL }}images/red-help-icon.png"title="The Clearinghouse does not need your private key to provide you access to vessels.  You may wish to download this key and then delete it from the server."/></td>
 					<td class="value">********<a href="#">
-						<form class="inline" method="POST" action="{% url priv_key %}">
+						<form class="inline" method="POST" action="{% url 'priv_key' %}">
 							<button type="submit" title="Download your private key">Download </button>
 						</form>
-						<form class="inline" method="POST" action="{% url del_priv %}">
+						<form class="inline" method="POST" action="{% url 'del_priv' %}">
 							<input type="hidden" name="keyToDelete" value={{ username }}/>
 							<button id="delete" type="submit" title="Delete your private key">Delete </button>
 						</form>

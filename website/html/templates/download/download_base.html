@@ -6,11 +6,11 @@
 			<table>
 				<tr>
 				  {% block nav_getdonations %}
-				  <td><a href="{% url installers username %}">Donate Resources</a></td>
+				  <td><a href="{% url 'installers' username %}">Donate Resources</a></td>
 				  {% endblock nav_getdonations %}
 
 				  {% block nav_help %}
-				  <td><a href="{% url donations_help username %}">Help</a></td>
+				  <td><a href="{% url 'donations_help' username %}">Help</a></td>
 				  {% endblock nav_help %}
 				</tr>
 			</table>

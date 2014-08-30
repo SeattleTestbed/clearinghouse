@@ -51,9 +51,9 @@ Auto Register - Clearinghouse
     <div id="main">
 		<div id="middle">		
 		  <div id="learn-about-seattle">
-		    This {{backend}} account is not linked with a Seattle Clearinghouse account so we're creating one for you.  Already a user? <a href="{% url login %}">Login</a>
+		    This {{backend}} account is not linked with a Seattle Clearinghouse account so we're creating one for you.  Already a user? <a href="{% url 'login' %}">Login</a>
 		  </div>
-<form action="{% url auto_register %}" method="POST"> 
+<form action="{% url 'auto_register' %}" method="POST"> 
  {% if username_form.errors %}
 		  <p class="warning2">
 		  Please correct the following:</p>

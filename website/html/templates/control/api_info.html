@@ -10,7 +10,7 @@ API Info - Seattle Clearinghouse
 {% endblock title %}
 
 {% block nav_profile %}
-<td class="active"><a href="{% url profile %}">Profile</a></td>
+<td class="active"><a href="{% url 'profile' %}">Profile</a></td>
 {% endblock nav_profile %}
 
 {% block content %}
@@ -42,7 +42,7 @@ API Info - Seattle Clearinghouse
 			{% endif %}
 			
 			<div id="apikeygenform">
-			<form action="{% url api_info %}" method="post">
+			<form action="{% url 'api_info' %}" method="post">
 			<input type="hidden" name="generate_api_key" value="yes">
 			<input type="submit" value="Generate a new API key">
 			</form>

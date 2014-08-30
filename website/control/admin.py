@@ -59,7 +59,7 @@ class GeniUserAdmin(admin.ModelAdmin):
 
 
   def get_urls(self):
-    from django.conf.urls.defaults import patterns
+    from django.conf.urls import patterns
 
     # Assign handler for the password change url
     return patterns('',

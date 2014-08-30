@@ -72,7 +72,7 @@ def new_openconnection(destip, destport, localip, localport, timeout):
 openconnection = new_openconnection
 
 # overwrite the openconnection that is provided to modules we import
-sys.modules['dylink_repy'].openconnection = openconnection
+sys.modules['dylink_r2py'].openconnection = openconnection
 
 ####### end code to enable affixes ######
 

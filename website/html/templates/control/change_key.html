@@ -10,7 +10,7 @@ Change Key - Seattle Clearinghouse
 {% endblock title %}
 
 {% block nav_profile %}
-<td class="active"><a href="{% url profile %}">Profile</a></td>
+<td class="active"><a href="{% url 'profile' %}">Profile</a></td>
 {% endblock nav_profile %}
 
 {% block content %}
@@ -33,7 +33,7 @@ Change Key - Seattle Clearinghouse
 			   using Seash), you can upload your <strong>public key</strong> here.
 			   Do not upload your private key.</p>
 			<div class="keyform">
-			<form action="{% url change_key %}" method="post" enctype="multipart/form-data">
+			<form action="{% url 'change_key' %}" method="post" enctype="multipart/form-data">
 			<input type="file" name="pubkey">
 			<br />
 			<br />
@@ -47,7 +47,7 @@ Change Key - Seattle Clearinghouse
 			we generated.
 			
 			<div class="keyform">
-			<form action="{% url change_key %}" method="post">
+			<form action="{% url 'change_key' %}" method="post">
 			<input type="hidden" name="generate" value="yes">
 			<input type="submit" value="Generate Key">
 			</form>

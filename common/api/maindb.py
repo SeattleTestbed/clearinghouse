@@ -141,7 +141,7 @@ def init_maindb():
   <Returns>
     None.
   """
-  if settings.DATABASE_ENGINE is "mysql":
+  if settings.DATABASES['default']['ENGINE'] == "django.db.backends.mysql":
     django.db.connection.cursor().execute('set transaction isolation level read committed')
   else:
     log.error("init_maindb() called when not using mysql. This is only OK when developing.")

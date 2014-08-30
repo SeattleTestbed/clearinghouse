@@ -66,7 +66,8 @@ Login - Clearinghouse
 		    before using the Clearinghouse, a resource sharing website.
 		  </div>
 		
-		  <form method="post" action="{% url login %}">
+		  <form method="post" action="{% url 'login' %}">
+          {% csrf_token %}
 		  {% if err %}
 		  <p class="warning2">{{ err }}</p><br/>
 		  {% endif %}
@@ -101,23 +102,23 @@ Login - Clearinghouse
 					{% for type, backends in social_auth.backends.items %}
 						{% for type in backends %}
 							{% if type == "facebook"%}
-								<a href="{% url socialauth_begin 'facebook' %}">
+								<a href="{% url 'socialauth_begin' 'facebook' %}">
 								<img src="{{ MEDIA_URL }}images/Facebook-icon.png" alt="Login with Facebook" /></a>
 							{% endif %}
 							{% if type == "google"%}
-								<a href="{% url socialauth_begin 'google' %}">
+								<a href="{% url 'socialauth_begin' 'google' %}">
 								<img src="{{ MEDIA_URL }}images/google-icon.png" alt="Login with Google" /></a>
 							{% endif %}
 							{% if type == "github"%}
-								<a href="{% url socialauth_begin 'github' %}">
+								<a href="{% url 'socialauth_begin' 'github' %}">
 								<img src="{{ MEDIA_URL }}images/github-icon.png" alt="Login with Github" /></a>
 							{% endif %}
 							{% if type == "live"%}
-								<a href="{% url socialauth_begin 'live' %}">
+								<a href="{% url 'socialauth_begin' 'live' %}">
 								<img src="{{ MEDIA_URL }}images/windows-icon.png" alt="Login with Windows Live" /></a>
 							{% endif %}
 							{% if type == "yahoo"%}
-								<a href="{% url socialauth_begin 'yahoo' %}">
+								<a href="{% url 'socialauth_begin' 'yahoo' %}">
 								<img src="{{ MEDIA_URL }}images/yahoo-icon.png" alt="Login with Yahoo" /></a>
 							{% endif %}
 						{% endfor %}
