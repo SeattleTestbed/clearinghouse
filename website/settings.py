@@ -240,6 +240,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
   # not_associated is a list of providers names that the current user doesn't have any association yet.
   # backends holds the list of backend names supported.  Each value is grouped by backend type openid, oauth2 and oauth
   'social_auth.context_processors.social_auth_by_type_backends',
+  'website.context_processor.testbed_tag',
 )
 #  Social_auth follows each of these in order and passes along a object with
 #  information gathered to each function.
@@ -275,3 +276,6 @@ SESSION_COOKIE_AGE = 3600
 
 # Use session cookies, not persistent cookies.
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# default value for the TESTBED template tag
+TESTBED="Albert's seattle flavored testbed"
