@@ -9,8 +9,7 @@ additional changes you'll need to make to this file.
 
 import os
 
-
-from clearinghouse.common.util import log
+from common.util import log
 
 
 
@@ -196,9 +195,10 @@ INSTALLED_APPS = (
   'django.contrib.messages',
   # Needed for OpenID/OAuth login so must be listed. 
   'social_auth',
+  'clearinghouse.website.control',
 
   # We have our maindb model defined here, so it must be listed.
-  'clearinghouse.website.control',
+  # 'clearinghouse.website.control.models',
 )
   # Seattle Clearinghouse uses a django plugin called "django social auth" to handle
   # OpenID and OAuth.  The desired OpenID/OAuth providers must be listed here 
@@ -215,7 +215,7 @@ AUTHENTICATION_BACKENDS = (
   #'social_auth.backends.browserid.BrowserIDBackend',
   #'social_auth.backends.contrib.live.LiveBackend',
   # Django default this is always needed and must always be last.
-  'django.contrib.auth.backends.ModelBackend',	    
+  'django.contrib.auth.backends.ModelBackend',      
 )
 # Social_Auth needs OAuth keys in order to function.  Each backend provider has its
 # own method to acquire keys usually requireing registering the web app with them.

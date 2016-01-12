@@ -159,7 +159,7 @@ def init_maindb():
 
 
 
-@transaction.commit_manually
+# @transaction.commit_manually
 @log_function_call_and_only_first_argument
 def create_user(username, password, email, affiliation, user_pubkey, user_privkey, donor_pubkey):
   """
@@ -219,21 +219,22 @@ def create_user(username, password, email, affiliation, user_pubkey, user_privke
   # We're committing manually to make sure the multiple database writes are
   # atomic. (That is, regenerate_api_key() will do a database write.)
   try:
-    # Generate a random port for the user's usable vessel port.
-    port = random.sample(ALLOWED_USER_PORTS, 1)[0]
-  
-    # Create the GeniUser (this is actually records in two different tables
-    # underneath because of model inheretance, but django hides that from us).
-    geniuser = GeniUser(username=username, password='', email=email,
-                        affiliation=affiliation, user_pubkey=user_pubkey,
-                        user_privkey=user_privkey, donor_pubkey=donor_pubkey,
-                        usable_vessel_port=port,
-                        free_vessel_credits=DEFAULT_FREE_VESSEL_CREDITS)
-    # Set the password using this function so that it gets hashed by django.
-    geniuser.set_password(password)
-    geniuser.save()
-  
-    regenerate_api_key(geniuser)
+      with transaction.atomic():
+          # Generate a random port for the user's usable vessel port.
+          port = random.sample(ALLOWED_USER_PORTS, 1)[0]
+
+          # Create the GeniUser (this is actually records in two different tables
+          # underneath because of model inheretance, but django hides that from us).
+          geniuser = GeniUser(username=username, password='', email=email,
+                              affiliation=affiliation, user_pubkey=user_pubkey,
+                              user_privkey=user_privkey, donor_pubkey=donor_pubkey,
+                              usable_vessel_port=port,
+                              free_vessel_credits=DEFAULT_FREE_VESSEL_CREDITS)
+          # Set the password using this function so that it gets hashed by django.
+          geniuser.set_password(password)
+          geniuser.save()
+
+          regenerate_api_key(geniuser)
     
   except:
     transaction.rollback()
@@ -575,7 +576,7 @@ def create_vessel(node, vesselname):
 
 
 
-@transaction.commit_manually
+# @transaction.commit_manually
 @log_function_call
 def set_vessel_ports(vessel, port_list):
   """
@@ -604,13 +605,14 @@ def set_vessel_ports(vessel, port_list):
   # We're committing manually to make sure the multiple database writes are
   # atomic.
   try:
-    # Delete all existing VesselPort records for this vessel.
-    VesselPort.objects.filter(vessel=vessel).delete()
-    
-    # Create a VesselPort record for each port in port_list.
-    for port in port_list:
-      vesselport = VesselPort(vessel=vessel, port=port)
-      vesselport.save()
+      with transaction.atomic():
+        # Delete all existing VesselPort records for this vessel.
+        VesselPort.objects.filter(vessel=vessel).delete()
+
+        # Create a VesselPort record for each port in port_list.
+        for port in port_list:
+          vesselport = VesselPort(vessel=vessel, port=port)
+          vesselport.save()
 
   except:
     transaction.rollback()

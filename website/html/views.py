@@ -79,6 +79,9 @@ rsa = dy_import_module("rsa.r2py")
 
 
 
+
+
+
 class LoggedInButFailedGetGeniUserError(Exception):
   """
   <Purpose>
@@ -468,6 +471,8 @@ def accounts_help(request):
 
 
 
+
+
 @login_required
 def mygeni(request):
   try:
@@ -522,7 +527,7 @@ def myvessels(request, get_form=False, action_summary="", action_detail="", remo
   
   # this user's number of donations, max vessels, total vessels and free credits
   my_donations = interface.get_donations(user)
-  my_max_vessels = interface.get_available_vessel_credits(user)	
+  my_max_vessels = interface.get_available_vessel_credits(user) 
   my_free_vessel_credits = interface.get_free_vessel_credits_amount(user)
   my_total_vessel_credits = interface.get_total_vessel_credits(user)
 

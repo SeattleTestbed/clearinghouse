@@ -7,6 +7,7 @@
 
 <Author>
   Justin Samuel
+  Sai Kaushik Borra
 
 <Purpose>
   This file contains definitions of model classes for the main database
@@ -26,8 +27,7 @@ import django
 from django.db import models
 from django.contrib.auth.models import User as DjangoUser
 
-from clearinghouse.common.util import log
-
+from common.util import log
 
 
 
@@ -37,20 +37,22 @@ from clearinghouse.common.util import log
 
 # Called when new database connections are created (see below).
 def _prepare_newly_created_db_connection(sender, **kwargs):
-  from clearinghouse.common.api import maindb
-  maindb.init_maindb()
+    from common.api import maindb
+    maindb.init_maindb()
 
 # If this is a modern-enough version of django to support specifying a function
 # to be called on database connection creation, then have it call init_maindb()
 # at that time. This is to help prevent init_maindb() from accidentally not
 # being called when it should be.
-if django.VERSION >= (1,1):
-  # connection_created only exists with django >= 1.1
-  import django.db.backends.signals
-  django.db.backends.signals.connection_created.connect(_prepare_newly_created_db_connection)
+if django.VERSION >= (1.1):
+    # connection_created only exists with django >= 1.1
+    import django.db.backends.signals
+    django.db.backends.signals.connection_created.connect(_prepare_newly_created_db_connection)
 else:
-  log.error("You must use django >= 1.1 in order to support automatically " +
+    log.error("You must use django >= 1.1 in order to support automatically " +
             "perform custom database connection initialization. (See settings.py)")
+
+
 
 
 
@@ -60,7 +62,7 @@ else:
 class GeniUser(DjangoUser):
   """
   Defines the GeniUser model. A GeniUser record represents a SeattleGeni user.
-  
+
   By extending the DjangoUser model, django will still create a separate table
   in the database for the GeniUser model but will take care of making it look
   the same to us.
@@ -426,7 +428,7 @@ class ActionLogVesselDetails(models.Model):
 
   # To know the port despite the fact that this may change for the
   # node record itself.
-  node_port = models.IntegerField("Node port", max_length=100, db_index=True)
+  node_port = models.IntegerField("Node port", db_index=True)
 
   # We store the vessel name rather than a foreign key to the vessels table
   # because vessels can be deleted from the database, whereas nodes can't.

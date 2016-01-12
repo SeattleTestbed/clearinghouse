@@ -10,6 +10,10 @@
 
   Modified:
   Gaetano Pressimone 2012
+
+
+  Sai Kaushik Borra 2015
+
   
 <Purpose>
   Django template file for {{ TESTBED }} {{ CLEARINGHOUSE }}'s 'register' page.  The page 
@@ -27,6 +31,7 @@
 
 <Template Variables>
   page_top_errors:
+
 		Error messages to display.
 	
   form: 
@@ -36,6 +41,7 @@
 		.password2: 
     .affiliation:  
 		.email:  
+
     .pubkey:  
     .gen_upload_choice: 
 
@@ -54,6 +60,7 @@ Register - {{ CLEARINGHOUSE }}
 {% endblock nav_register %}
 
 {% block content %}
+
 	<div id="main">
 		<div id="middle">
 		
@@ -125,3 +132,4 @@ Register - {{ CLEARINGHOUSE }}
 		</div>
 	</div>
 {% endblock content %}
+
