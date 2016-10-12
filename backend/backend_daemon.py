@@ -337,14 +337,6 @@ def cleanup_vessels():
   
   log.info("[cleanup_vessels] cleanup thread started.")
 
-  # Beginning of part of fix for Issue #152
-  # 1. Remove enter_transaction_management() line (Functionality removed in
-  #    Django 1.8. Expecting autocommit to work in its absence.)
-  # 2. Add code to handle calling django.setup() in the appropriate conditions.
-
-  ## Start a transaction management.
-  #django.db.transaction.enter_transaction_management()
-
   # If we are in a django version that has django.setup() (1.7+?), run django.setup()
   # This is needed for django compatibility.
   # So that it works, undo the repy custom patching of the type builtin so that django can use it. We'll turn it back on after.
