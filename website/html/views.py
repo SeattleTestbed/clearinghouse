@@ -873,8 +873,6 @@ def priv_key(request):
   except LoggedInButFailedGetGeniUserError:
     return _show_failed_get_geniuser_page(request)
   
-  # Fixed for Issue #152, compatibility with Django 1.8+ requires shift from
-  # mime_type argument to content_type argument.
   response = HttpResponse(user.user_privkey, content_type='text/plain')
   response['Content-Disposition'] = 'attachment; filename=' + \
           str(user.username) + '.privatekey'
@@ -892,8 +890,6 @@ def pub_key(request):
   except LoggedInButFailedGetGeniUserError:
     return _show_failed_get_geniuser_page(request)
   
-  # Fixed for Issue #152, compatibility with Django 1.8+ requires shift from
-  # mime_type argument to content_type argument.
   response = HttpResponse(user.user_pubkey, content_type='text/plain')
   response['Content-Disposition'] = 'attachment; filename=' + \
             str(user.username) + '.publickey'
