@@ -106,8 +106,6 @@ class GeniUserCreationForm(DjangoUserCreationForm):
 
 
 
-# Part of fix for Issue #152: change default field_list from None to '__all__'
-# for Django 1.8 compatibility
 def gen_edit_user_form(field_list='__all__', *args, **kwargs):
   """
   <Purpose>
