@@ -23,9 +23,7 @@
   We try to keep all manual transaction management in clearinghouse to within
   this module. The general idea is that the default behavior of django is
   what we want in most places (to commit any time data-altering functions
-  are called, such as .save() or .delete()). However, in a few cases we
-  want multiple data-altering functions to be committed atomically, so we
-  use @transaction.commit_manually.
+  are called, such as .save() or .delete()).
 """
 
 # It is a bit confusing to just import datetime because then you have to use
@@ -159,7 +157,6 @@ def init_maindb():
 
 
 
-# @transaction.commit_manually
 @log_function_call_and_only_first_argument
 def create_user(username, password, email, affiliation, user_pubkey, user_privkey, donor_pubkey):
   """
@@ -576,7 +573,6 @@ def create_vessel(node, vesselname):
 
 
 
-# @transaction.commit_manually
 @log_function_call
 def set_vessel_ports(vessel, port_list):
   """
