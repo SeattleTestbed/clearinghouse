@@ -215,7 +215,7 @@ AUTHENTICATION_BACKENDS = (
   #'social_auth.backends.browserid.BrowserIDBackend',
   #'social_auth.backends.contrib.live.LiveBackend',
   # Django default this is always needed and must always be last.
-  'django.contrib.auth.backends.ModelBackend',      
+  'django.contrib.auth.backends.ModelBackend',
 )
 # Social_Auth needs OAuth keys in order to function.  Each backend provider has its
 # own method to acquire keys usually requireing registering the web app with them.
