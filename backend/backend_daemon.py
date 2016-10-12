@@ -324,8 +324,27 @@ class BackendPublicFunctions(object):
     
     # Raises NodemanagerCommunicationError if it fails.
     return nodemanager.join_vessels(nodehandle, firstvesselname, secondvesselname)
-      
 
+
+
+def run_django_setup_using_python_type():
+  """
+  Helper function to run `django.setup` with `__builtins__.type`
+  set to the default Python `type` function (rather than Repy's).
+
+  We need to do this because other code could have imported
+  repy.py and/or safe.py and by this have overridden the built-in
+  `type` function. We need to undo this override temporarily 
+  before running `django.setup()`, and restore it afterwards.
+  (Restoration makes sure that any following Repy code/libraries
+  see the overridden `type` again.)
+  """
+  repy_safe_type = __builtins__.type
+  # safe.py stores a reference to Python's original `type`
+  import safe
+  __builtins__.type = safe._type
+  django.setup()
+  __builtins__.type = repy_safe_type
 
 
 
@@ -337,16 +356,7 @@ def cleanup_vessels():
   
   log.info("[cleanup_vessels] cleanup thread started.")
 
-  # If we are in a django version that has django.setup() (1.7+?), run django.setup()
-  # This is needed for django compatibility.
-  # So that it works, undo the repy custom patching of the type builtin so that django can use it. We'll turn it back on after.
-  if hasattr(django, 'setup'):
-    temp_type = __builtins__.type
-    import safe
-    __builtins__.type = safe._type
-    django.setup()
-    __builtins__.type = temp_type
-  # end of Issue #152 change
+  run_django_setup_using_python_type()
 
 
   # Run forever.
@@ -500,18 +510,7 @@ def sync_user_keys_of_vessels():
 
   log.info("[sync_user_keys_of_vessels] thread started.")
 
-  # Beginning of part of fix for Issue #152
-  # If we are in a django version that has django.setup() (1.7+?), run
-  # django.setup(). This is needed for django compatibility. So that it works,
-  # undo the repy custom patching of the type builtin so that django can use it.
-  # We'll turn it back on after.
-  if hasattr(django, 'setup'):
-    temp_type = __builtins__.type
-    import safe
-    __builtins__.type = safe._type
-    django.setup()
-    __builtins__.type = temp_type
-  # end of part of fix for Issue #152
+  run_django_setup_using_python_type()
 
   # Run forever.
   while True:
