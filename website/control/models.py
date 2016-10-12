@@ -37,22 +37,13 @@ from clearinghouse.common.util import log
 
 # Called when new database connections are created (see below).
 def _prepare_newly_created_db_connection(sender, **kwargs):
-    from clearinghouse.common.api import maindb
-    maindb.init_maindb()
+  from clearinghouse.common.api import maindb
+  maindb.init_maindb()
 
-# If this is a modern-enough version of django to support specifying a function
-# to be called on database connection creation, then have it call init_maindb()
-# at that time. This is to help prevent init_maindb() from accidentally not
-# being called when it should be.
-if django.VERSION >= (1.1):
-    # connection_created only exists with django >= 1.1
-    import django.db.backends.signals
-    django.db.backends.signals.connection_created.connect(_prepare_newly_created_db_connection)
-else:
-    log.error("You must use django >= 1.1 in order to support automatically " +
-            "perform custom database connection initialization. (See settings.py)")
-
-
+# Call init_maindb() on database connection creation. This is to help prevent
+# init_maindb() from accidentally not being called when it should be.
+import django.db.backends.signals
+django.db.backends.signals.connection_created.connect(_prepare_newly_created_db_connection)
 
 
 
