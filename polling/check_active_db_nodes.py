@@ -65,17 +65,7 @@ def main():
   
   lockserver_handle = lockserver.create_lockserver_handle()
 
-  # Beginning of part of fix for Issue #152
-  # Perform django setup (required in Django 1.7+ (possibly 1.6.?+)) to make
-  # db/models available. We need to do this if we are using a django version
-  # that has django.setup() (1.7+?) This should happen before the repy patching
-  # of builtins, which likely occurs in the add_dy_support call in the next line
-  # of code. django.setup() expects to be able to use the builtin keyword
-  # 'type', which is patched by repy, so we should do this here, before that
-  # patching.
-  if hasattr(django, 'setup'):
-    django.setup()
-  # end of Issue #152 fix
+  django.setup()
 
 
   # Always try to release the lockserver handle, though it's probably not
