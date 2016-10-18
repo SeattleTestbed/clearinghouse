@@ -18,6 +18,7 @@
 
 <Stylesheet>
   common.css
+  
 
 <Scripts>
   None
@@ -29,33 +30,29 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>{% block title %}{{ TESTBED }} {{ CLEARINGHOUSE }} using {{ TESTBED }}{% endblock title%}</title>
 
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>
-            {% block title %}{{ TESTBED }} {{ CLEARINGHOUSE }} using {{ TESTBED }}{% endblock title%}
-        </title>
+  {% block style %}	
+	  <link href="{{ MEDIA_URL }}css/common.css" rel="stylesheet" type="text/css" />
+  {% endblock style %}
 
-        {% block style %}
-              <link href="{{ MEDIA_URL }}css/common.css" rel="stylesheet" type="text/css" />
-        {% endblock style %}
+  {% block script %}
+  {% endblock script %}
+	
+</head>
 
-        {% block script %}
-        {% endblock script %}
+<body>
+  {% block header %}	
+	  <div id="header">
+  		<span id="logo"><a href="{% url 'profile' %}">{{ TESTBED }} {{ CLEARINGHOUSE }}</a></span>
+  		<span id="caption">Learn about <a href="{{ TESTBED_URL }}">{{ TESTBED }}</a></span>	
+  	</div>
+	{% endblock header%}	
 
-    </head>
+	{% block navigation %}{% endblock navigation %}
+	{% block content %}{% endblock content %}
 
-    <body>
-        {% block header %}
-            <div id="header">
-                <span id="logo"><a href="{% url 'profile' %}">Sensibility Testbed {{ CLEARINGHOUSE }}</a></span>
-                <!--<span id="caption">Learn about <a href="{{ TESTBED_URL }}">{{ TESTBED }}</a></span> -->
-            </div>
-        {% endblock header%}
-
-        {% block navigation %}{% endblock navigation %}
-        {% block content %}{% endblock content %}
-
-    </body>
-</html> 
-
+</body>
+</html>	
