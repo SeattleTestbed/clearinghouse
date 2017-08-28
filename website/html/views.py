@@ -22,6 +22,7 @@ import sys
 import shutil
 import subprocess
 import xmlrpclib
+import ssl
 
 # Needed to escape characters for the Android referrer...
 import urllib
@@ -1112,7 +1113,17 @@ def _build_installer(username, platform):
     return False, error_response
 
   try:
-    xmlrpc_proxy = xmlrpclib.ServerProxy(settings.SEATTLECLEARINGHOUSE_INSTALLER_BUILDER_XMLRPC)
+    # Per default this setting is True in DEBUG mode.
+    # Passing an unverified ssl context allows the Custom Installer Builder
+    # to use self-signed server certificates.
+    # c.f. https://github.com/SeattleTestbed/custominstallerbuilder/issues/16
+    if settings.UNVERIFIED_SSL_CONTEXT:
+      xmlrpc_proxy = xmlrpclib.ServerProxy(
+        settings.SEATTLECLEARINGHOUSE_INSTALLER_BUILDER_XMLRPC, 
+        context=ssl._create_unverified_context())
+    else:
+      xmlrpc_proxy = xmlrpclib.ServerProxy(
+        settings.SEATTLECLEARINGHOUSE_INSTALLER_BUILDER_XMLRPC)
     
     vessel_list = [{'percentage': 80, 'owner': 'owner', 'users': ['user']}]
     

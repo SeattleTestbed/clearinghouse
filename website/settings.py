@@ -50,6 +50,14 @@ SEATTLECLEARINGHOUSE_STATE_KEYS_DIR = os.path.join(SEATTLECLEARINGHOUSE_WEBSITE_
 SEATTLECLEARINGHOUSE_INSTALLER_BUILDER_XMLRPC = "https://custombuilder.poly.edu/custom_install/xmlrpc/" # Default, currently no repy_v2 support
 #SEATTLECLEARINGHOUSE_INSTALLER_BUILDER_XMLRPC = "https://sensibilityclearinghouse.poly.edu/custominstallerbuilder/xmlrpc/" # SensibilityTestbed's CIB, which supports repy_v2 and thereby NAT traversal.
 
+# In Python 2.7.9+ a HTTPS request to a server using a self-signed certificate
+# will raise an exception.
+# If set to `True` the SSL context is not verified for HTTPS XMLRPC requests
+# and therefore allows the use of self-signed certificates.
+# c.f. https://github.com/SeattleTestbed/custominstallerbuilder/issues/16
+# NOTE: Don't set to `True` in production!
+UNVERIFIED_SSL_CONTEXT = DEBUG
+
 # Not currently used. This is left in for legacy installs
 # The directory where the base installers named seattle_linux.tgz, seattle_mac.tgz,
 # and seattle_win.zip are located.
@@ -250,6 +258,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
   'social_auth.context_processors.social_auth_by_type_backends',
   # Add context processor for TESTBED etc. tags; configure these below.
   'clearinghouse.website.context_processor.customizable_strings',
+  'clearinghouse.website.context_processor.options',
 )
 #  Social_auth follows each of these in order and passes along a object with
 #  information gathered to each function.
