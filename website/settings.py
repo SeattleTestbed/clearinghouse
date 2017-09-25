@@ -11,7 +11,11 @@ import os
 
 from clearinghouse.common.util import log
 
-
+# The host/domain names that this Django site can serve. Usually matches
+# the FQDN in your BASE_URL, but may include (sub-)domain wildcards.
+# To implicitly allow serving on localhost for testing purposes, outcomment
+# it and set DEBUG = True
+ALLOWED_HOSTS = ["example.com"]
 
 # If DEBUG is True, then error details will be shown on the website and ADMINS
 # will not receive an email when an error occurs. So, this should be False in
